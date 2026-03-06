@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Bookstore-Aisyah Mumtaz</title>
+    <link rel="stylesheet" href="style.css"/> 
+</head>
+<body>
+    <header class="header">
+    <nav class="navbar">
+      <a href="index.html">Home</a>  
+      <a href="product.html">Product</a>
+      <a href="bedah-buku.html">Book Review</a>  
+      <a href="testimoni.html">Testimoni</a>
+      <a href="tampil-testimoni.html">Testimoni pembeli</a>
+      <a href="kontak.html">Contact us</a>
+      <a href="event.html">Our Event</a>
+    </nav>
+    </header>
+
+<h1>Customer Testimonies</h1>
+
+<div id="testimoniContainer"></div>
+<button id="deleteAllTestimoni">Delete all testimonies</button>
+
+<script>
+const container = document.getElementById("testimoniContainer");
+const data = JSON.parse(localStorage.getItem("testimonyList")) || [];
+
+if (data.length === 0) {
+  container.innerHTML = "<p>No testimonies yet.</p>";
+}
+
+data.forEach(item => {
+  const card = document.createElement("div");
+  card.className = "testimoni-card";
+
+  card.innerHTML = `
+    <h3>${item.name}</h3>
+    <p><strong>${item.school}</strong></p>
+    <p>📘 ${item.judul}</p>
+    <p>⭐ ${"★".repeat(item.rating)}</p>
+    <p>${item.pesan}</p>
+    <hr>
+  `;
+
+  container.appendChild(card);
+});
+document.getElementById("deleteAllTestimoni").onclick = function () {
+  if (confirm("Delete all testimonies?")) {
+    localStorage.removeItem("testimonyList"); // ⬅️ INI WAJIB SAMA
+    location.reload();
+  }
+};
+</script>
+<footer>
+  <p>&copy; <span id="year"></span> Etrama Arnius</p>
+</footer>
+
+<script>
+document.getElementById("year").textContent =
+new Date().getFullYear();
+</script>
+
+</body>
+</html>
